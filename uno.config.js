@@ -1,6 +1,7 @@
 // uno.config.ts
 import { defineConfig } from "unocss";
 
+const BASE_GAP = 4;
 const BASE_SPACE = 40;
 
 export default defineConfig({
@@ -35,5 +36,25 @@ export default defineConfig({
     ["absolute", { position: "absolute" }],
     ["fixed", { position: "fixed" }],
     ["sticky", { position: "sticky" }],
+
+    // Gaps: small spaces use for gaps, paddings, etc.
+    [/^gap-(\d+)$/, ([, n]) => ({ gap: `${n * BASE_GAP}px` })],
+    [/^gap-inline-(\d+)$/, ([, n]) => ({ "column-gap": `${n * BASE_GAP}px` })],
+    [/^gap-block-(\d+)$/, ([, n]) => ({ "row-gap": `${n * BASE_GAP}px` })],
+
+    [/^pad-(\d+)$/, ([, n]) => ({ padding: `${n * BASE_GAP}px` })],
+    [/^pad-inline-(\d+)$/, ([, n]) => ({ "padding-inline": `${n * BASE_GAP}px` })],
+    [/^pad-block-(\d+)$/, ([, n]) => ({ "padding-block": `${n * BASE_GAP}px` })],
+
+    [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `${n * BASE_SPACE}px` })],
+    [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${n * BASE_SPACE}px, 100%)` })],
+    [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `${n * BASE_SPACE}px` })],
+
+    [/^min-block-(\d+)$/, ([, n]) => ({ "min-block-size": `${n * BASE_GAP}px` })],
+    [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${n * BASE_GAP}px` })],
+    [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${n * BASE_GAP}px` })],
+
+    [/^nudge-(\d+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
+    [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${n * BASE_GAP}px` })],
   ],
 });
