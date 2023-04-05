@@ -28,9 +28,8 @@ export function breakpointVariants() {
 }
 
 export function parentVariant(name, parent) {
-  return (input, ctx) => {
+  return (input) => {
     if (input === undefined || !input.startsWith(`${name}:`)) return input;
-    console.log(ctx && ctx.theme.breakpoints);
 
     return {
       matcher: input.slice(name.length + 1),
@@ -65,8 +64,11 @@ export default defineConfig({
   variants: [
     postfixVariant("hover", "hover"),
     postfixVariant("focus", "focus-visible"),
+    postfixVariant("active", "active"),
+    postfixVariant("odd", "active"),
     parentVariant("dark", "@media (prefers-color-scheme: dark)"),
     parentVariant("light", "@media (prefers-color-scheme: light)"),
+    parentVariant("print", "@media print"),
     breakpointVariants(),
   ].flat(),
   rules: [
@@ -100,6 +102,8 @@ export default defineConfig({
     ["absolute", { position: "absolute" }],
     ["fixed", { position: "fixed" }],
     ["sticky", { position: "sticky" }],
+
+    ["hidden", { display: "none" }],
 
     // Gaps: small spaces use for gaps, paddings, etc.
     [/^gap-(\d+)$/, ([, n]) => ({ gap: `${n * BASE_GAP}px` })],
