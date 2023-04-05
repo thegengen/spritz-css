@@ -4,7 +4,71 @@ import { defineConfig } from "unocss";
 const BASE_GAP = 4;
 const BASE_SPACE = 40;
 
+export function breakpointVariants() {
+  return (input, ctx) => {
+    let breakpoints = ctx?.theme?.breakpoints;
+
+    if (input === undefined || breakpoints === undefined) return input;
+
+    for (let name of Object.keys(breakpoints)) {
+      if (input.startsWith(`${name}:`)) {
+        return {
+          matcher: input.slice(name.length + 1),
+          handle: (input, next) =>
+            next({
+              ...input,
+              parent: `${input.parent ? `${input.parent} $$ ` : ""}@media (min-width: ${breakpoints[name]})`,
+            }),
+        };
+      }
+    }
+
+    return input;
+  };
+}
+
+export function parentVariant(name, parent) {
+  return (input, ctx) => {
+    if (input === undefined || !input.startsWith(`${name}:`)) return input;
+    console.log(ctx && ctx.theme.breakpoints);
+
+    return {
+      matcher: input.slice(name.length + 1),
+      handle: (input, next) =>
+        next({
+          ...input,
+          parent: `${input.parent ? `${input.parent} $$ ` : ""}${parent}`,
+        }),
+    };
+  };
+}
+
+function postfixVariant(label, postfix) {
+  return (input) => {
+    if (input === undefined || !input.startsWith(`${label}:`)) return input;
+
+    return {
+      // slice `hover:` prefix and passed to the next variants and rules
+      matcher: input.slice(label.length + 1),
+      selector: (s) => `${s}:${postfix}`,
+    };
+  };
+}
+
 export default defineConfig({
+  theme: {
+    breakpoints: {
+      sm: "320px",
+      md: "640px",
+    },
+  },
+  variants: [
+    postfixVariant("hover", "hover"),
+    postfixVariant("focus", "focus-visible"),
+    parentVariant("dark", "@media (prefers-color-scheme: dark)"),
+    parentVariant("light", "@media (prefers-color-scheme: light)"),
+    breakpointVariants(),
+  ].flat(),
   rules: [
     // cusp for changing the switcher from horizontal to vertical
     [/^cusp-(\d+)$/, ([, n]) => ({ "--cusp": `${n * BASE_SPACE}px` })],
