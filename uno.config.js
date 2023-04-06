@@ -144,6 +144,7 @@ export default defineConfig({
     ["non-italic", { "font-style": "normal" }],
     [/^weight-(\d+)$/, ([, n]) => ({ "font-weight": `${n}` })],
 
+    ["truncate", { overflow: "hidden", "text-overflow": "ellipsis", "white-space": "nowrap" }],
     [
       /^line-clamp-(\d+)$/,
       ([, n]) => ({
@@ -176,7 +177,6 @@ export default defineConfig({
     ["order-first", { order: "-999" }],
     ["order-last", { order: "999" }],
 
-    // Should outline really be here? it seems like a set-it-and-forget-it kind of thing
     [/^border-([\d\.]+)$/, ([, n]) => ({ "border-width": `${n}px` })],
     [/^outline-([\d\.]+)$/, ([, n]) => ({ "outline-width": `${n}px` })],
     [/^radius-(\d+)$/, ([, n]) => ({ "border-radius": `${n * BASE_GAP}px` })],
