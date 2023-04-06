@@ -1,6 +1,7 @@
 // uno.config.ts
 import { defineConfig } from "unocss";
 
+const BASE_TRACKING = 0.025;
 const BASE_GAP = 4;
 const BASE_SPACE = 40;
 
@@ -98,6 +99,9 @@ export default defineConfig({
     ["grow-max", { "flex-grow": 999 }],
     [/^shrink-(\d+)$/, ([, n]) => ({ "flex-shrink": `${n}` })],
 
+    ["isolate", { isolation: "isolate" }],
+
+    ["static", { position: "static" }],
     ["relative", { position: "relative" }],
     ["absolute", { position: "absolute" }],
     ["fixed", { position: "fixed" }],
@@ -122,7 +126,55 @@ export default defineConfig({
     [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${n * BASE_GAP}px` })],
     [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${n * BASE_GAP}px` })],
 
-    [/^nudge-(\d+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
+    [/^nudge-(\d\.+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
     [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${n * BASE_GAP}px` })],
+
+    // TODO: do we want inset? will that get used a lot?
+
+    ["aspect-square", { "aspect-ratio": "1/1" }],
+    ["aspect-portrait", { "aspect-ratio": "3/4" }],
+    ["aspect-landscape", { "aspect-ratio": "4/3" }],
+    ["aspect-video", { "aspect-ratio": "16/9" }],
+
+    ["float-left", { float: "left" }],
+    ["float-right", { float: "right" }],
+    ["float-none", { float: "none" }],
+
+    [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
+    [/^order-(\d+)$/, ([, n]) => ({ order: `${n}` })],
+    ["order-first", { order: -999 }],
+    ["order-last", { order: 999 }],
+
+    ["italic", { "font-style": "italic" }],
+    ["non-italic", { "font-style": "normal" }],
+    [/^weight-(\d+)$/, ([, n]) => ({ "font-weight": `${n}` })],
+
+    [
+      /^line-clamp-(\d+)$/,
+      ([, n]) => ({
+        overflow: "hidden",
+        display: "-webkit-box",
+        "-webkit-box-orient": "vertical",
+        "-webkit-line-clamp": `${n}`,
+      }),
+    ],
+
+    ["list-inside", { "list-style-position": "inside" }],
+    ["list-outside", { "list-style-position": "outside" }],
+    ["list-none", { "list-style-type": "none" }],
+    ["list-disc", { "list-style-type": "disc" }],
+
+    ["text-start", { "text-align": "start" }],
+    ["text-end", { "text-align": "end" }],
+    ["text-center", { "text-align": "center" }],
+
+    ["underline", { "text-decoration-line": "underline" }],
+    ["line-through", { "text-decoration-line": "line-through" }],
+    ["no-line", { "text-decoration-line": "none" }],
+
+    ["decoration-from-font", { "text-decoration-thickness": "from-font" }],
+    [/^decoration-(\d\.+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
+
+    // TODO: images, colors
   ],
 });
