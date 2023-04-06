@@ -126,7 +126,7 @@ export default defineConfig({
     [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${n * BASE_GAP}px` })],
     [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${n * BASE_GAP}px` })],
 
-    [/^nudge-(\d\.+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
+    [/^nudge-([\d\.]+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
     [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${n * BASE_GAP}px` })],
 
     // TODO: do we want inset? will that get used a lot?
@@ -139,11 +139,6 @@ export default defineConfig({
     ["float-left", { float: "left" }],
     ["float-right", { float: "right" }],
     ["float-none", { float: "none" }],
-
-    [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
-    [/^order-(\d+)$/, ([, n]) => ({ order: `${n}` })],
-    ["order-first", { order: -999 }],
-    ["order-last", { order: 999 }],
 
     ["italic", { "font-style": "italic" }],
     ["non-italic", { "font-style": "normal" }],
@@ -173,8 +168,18 @@ export default defineConfig({
     ["no-line", { "text-decoration-line": "none" }],
 
     ["decoration-from-font", { "text-decoration-thickness": "from-font" }],
-    [/^decoration-(\d\.+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
+    [/^decoration-([\d\.]+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
 
-    // TODO: images, colors
+    // TODO: icons, images, colors
+    [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
+    [/^order-(\d+)$/, ([, n]) => ({ order: `${n}` })],
+    ["order-first", { order: "-999" }],
+    ["order-last", { order: "999" }],
+
+    [/^radius-(\d+)$/, ([, n]) => ({ "border-radius": `${n * BASE_GAP}px` })],
+    ["radius-full", { "border-radius": "9999px" }],
+
+    [/^shadow-([\w\-]+)$/, ([, s]) => ({ "box-shadow": `var(--shadow-${s}` })],
+    [/^blur-(\d+)$/, ([, n]) => ({ "backdrop-filter": `blur(${n * BASE_GAP}px)` })],
   ],
 });
