@@ -170,16 +170,24 @@ export default defineConfig({
     ["decoration-from-font", { "text-decoration-thickness": "from-font" }],
     [/^decoration-([\d\.]+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
 
-    // TODO: icons, images, colors
+    // TODO: icons, images
     [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
     [/^order-(\d+)$/, ([, n]) => ({ order: `${n}` })],
     ["order-first", { order: "-999" }],
     ["order-last", { order: "999" }],
 
+    // Should outline really be here? it seems like a set-it-and-forget-it kind of thing
+    [/^border-([\d\.]+)$/, ([, n]) => ({ "border-width": `${n}px` })],
+    [/^outline-([\d\.]+)$/, ([, n]) => ({ "outline-width": `${n}px` })],
     [/^radius-(\d+)$/, ([, n]) => ({ "border-radius": `${n * BASE_GAP}px` })],
     ["radius-full", { "border-radius": "9999px" }],
 
-    [/^shadow-([\w\-]+)$/, ([, s]) => ({ "box-shadow": `var(--shadow-${s}` })],
+    [/^shadow-([\w\-]+)$/, ([, s]) => ({ "box-shadow": `var(--shadow-${s})` })],
     [/^blur-(\d+)$/, ([, n]) => ({ "backdrop-filter": `blur(${n * BASE_GAP}px)` })],
+
+    [/^fg-([\w\-]+)$/, ([, s]) => ({ "text-color": `var(--color-${s})` })],
+    [/^bg-([\w\-]+)$/, ([, s]) => ({ "background-color": `var(--color-${s})` })],
+    [/^border-([a-zA-Z][\w\-]+)$/, ([, s]) => ({ "border-color": `var(--color-${s})` })],
+    [/^outline-([a-zA-Z][\w\-]+)$/, ([, s]) => ({ "outline-color": `var(--color-${s})` })],
   ],
 });
