@@ -1,7 +1,7 @@
 // uno.config.ts
 import { defineConfig } from "unocss";
+import { readFileSync } from "fs";
 
-const BASE_TRACKING = 0.025;
 const BASE_GAP = 4;
 const BASE_SPACE = 40;
 
@@ -62,6 +62,7 @@ export default defineConfig({
       md: "640px",
     },
   },
+  preflights: [{ getCSS: () => readFileSync("./src/reset.css") }, { getCSS: () => readFileSync("./src/layout.css") }],
   variants: [
     postfixVariant("hover", "hover"),
     postfixVariant("focus", "focus-visible"),
@@ -172,6 +173,7 @@ export default defineConfig({
     [/^decoration-([\d\.]+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
 
     // TODO: icons, images
+    // See https://antfu.me/posts/icons-in-pure-css
     [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
     [/^order-(\d+)$/, ([, n]) => ({ order: `${n}` })],
     ["order-first", { order: "-999" }],
