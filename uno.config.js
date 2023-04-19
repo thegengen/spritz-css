@@ -62,7 +62,7 @@ export default defineConfig({
       md: "640px",
     },
   },
-  preflights: [{ getCSS: () => readFileSync("./src/reset.css") }, { getCSS: () => readFileSync("./src/layout.css") }],
+  preflights: [{ getCSS: () => readFileSync("./src/layout.css") }],
   variants: [
     postfixVariant("hover", "hover"),
     postfixVariant("focus", "focus-visible"),
