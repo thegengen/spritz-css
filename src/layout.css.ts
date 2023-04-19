@@ -5,6 +5,7 @@
   It also has a couple of additions (center-contents, row).
 */
 
+export default `
 .stack {
   display: flex;
   flex-direction: column;
@@ -130,3 +131,4 @@
   display: flex;
   /* TODO: truncate first? truncate last? */
 }
+`;
