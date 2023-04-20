@@ -106,6 +106,21 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
 
       ["decoration-from-font", { "text-decoration-thickness": "from-font" }],
       [/^decoration-([\d\.]+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
+
+      // TODO: icons, images
+      // See https://antfu.me/posts/icons-in-pure-css
+      [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
+      [/^order-(\d+)$/, ([, n]) => ({ order: `${n}` })],
+      ["order-first", { order: "-999" }],
+      ["order-last", { order: "999" }],
+
+      [/^border-([\d\.]+)$/, ([, n]) => ({ "border-width": `${n}px` })],
+      [/^outline-([\d\.]+)$/, ([, n]) => ({ "outline-width": `${n}px` })],
+      [/^radius-(\d+)$/, ([, n]) => ({ "border-radius": `${parseInt(n) * baseGap}px` })],
+      ["radius-full", { "border-radius": "9999px" }],
+
+      [/^shadow-([\w\-]+)$/, ([, s]) => ({ "box-shadow": `var(--shadow-${s})` })],
+      [/^blur-(\d+)$/, ([, n]) => ({ "backdrop-filter": `blur(${parseInt(n) * baseGap}px)` })],
     ],
   };
 }
