@@ -64,6 +64,48 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
 
       [/^nudge-([\d\.]+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
       [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${parseInt(n) * baseGap}px` })],
+
+      // TODO: do we want inset? will that get used a lot?
+
+      ["aspect-square", { "aspect-ratio": "1/1" }],
+      ["aspect-portrait", { "aspect-ratio": "3/4" }],
+      ["aspect-landscape", { "aspect-ratio": "4/3" }],
+      ["aspect-video", { "aspect-ratio": "16/9" }],
+
+      ["float-left", { float: "left" }],
+      ["float-right", { float: "right" }],
+      ["float-none", { float: "none" }],
+
+      ["italic", { "font-style": "italic" }],
+      ["non-italic", { "font-style": "normal" }],
+      [/^weight-(\d+)$/, ([, n]) => ({ "font-weight": `${n}` })],
+
+      ["truncate", { overflow: "hidden", "text-overflow": "ellipsis", "white-space": "nowrap" }],
+      [
+        /^line-clamp-(\d+)$/,
+        ([, n]) => ({
+          overflow: "hidden",
+          display: "-webkit-box",
+          "-webkit-box-orient": "vertical",
+          "-webkit-line-clamp": `${n}`,
+        }),
+      ],
+
+      ["list-inside", { "list-style-position": "inside" }],
+      ["list-outside", { "list-style-position": "outside" }],
+      ["list-none", { "list-style-type": "none" }],
+      ["list-disc", { "list-style-type": "disc" }],
+
+      ["text-start", { "text-align": "start" }],
+      ["text-end", { "text-align": "end" }],
+      ["text-center", { "text-align": "center" }],
+
+      ["underline", { "text-decoration-line": "underline" }],
+      ["line-through", { "text-decoration-line": "line-through" }],
+      ["no-line", { "text-decoration-line": "none" }],
+
+      ["decoration-from-font", { "text-decoration-thickness": "from-font" }],
+      [/^decoration-([\d\.]+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
     ],
   };
 }
