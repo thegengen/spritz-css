@@ -1,4 +1,4 @@
-import type { Preset, PresetOptions, Variant } from "@unocss/core";
+import type { Preset, PresetOptions, Variant, VariantContext } from "@unocss/core";
 import layout from "./layout.css";
 
 export interface PresetSpritzOptions extends PresetOptions {
@@ -6,7 +6,9 @@ export interface PresetSpritzOptions extends PresetOptions {
   baseSize?: number;
 }
 
-interface Theme {}
+interface Theme {
+  breakpoints?: Record<string, string>;
+}
 
 export function parentVariant(name: string, parent: string): Variant {
   return (input) => {
@@ -23,7 +25,30 @@ export function parentVariant(name: string, parent: string): Variant {
   };
 }
 
-function postfixVariant(label: string, postfix: string): Variant {
+export function breakpointVariants(): string | Variant {
+  return (input: string, ctx: Readonly<VariantContext<Theme>>) => {
+    let breakpoints = ctx?.theme?.breakpoints;
+
+    if (input === undefined || breakpoints === undefined) return input;
+
+    for (let name of Object.keys(breakpoints)) {
+      if (input.startsWith(`${name}:`)) {
+        return {
+          matcher: input.slice(name.length + 1),
+          handle: (input, next) =>
+            next({
+              ...input,
+              parent: `${input.parent ? `${input.parent} $$ ` : ""}@media (min-width: ${breakpoints[name]})`,
+            }),
+        };
+      }
+    }
+
+    return input;
+  };
+}
+
+function postfixVariant(label: string, postfix: string): string | Variant {
   return (input) => {
     if (input === undefined || !input.startsWith(`${label}:`)) return input;
 
@@ -51,7 +76,8 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       parentVariant("dark", "@media (prefers-color-scheme: dark)"),
       parentVariant("light", "@media (prefers-color-scheme: light)"),
       parentVariant("print", "@media print"),
-    ],
+      breakpointVariants(),
+    ].flat(),
     rules: [
       // cusp for changing the switcher from horizontal to vertical
       [/^cusp-(\d+)$/, ([, n]) => ({ "--cusp": `${parseInt(n) * baseSpace}px` })],
