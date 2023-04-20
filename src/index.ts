@@ -1,4 +1,4 @@
-import type { Preset, PresetOptions } from "@unocss/core";
+import type { Preset, PresetOptions, Variant } from "@unocss/core";
 import layout from "./layout.css";
 
 export interface PresetSpritzOptions extends PresetOptions {
@@ -8,6 +8,18 @@ export interface PresetSpritzOptions extends PresetOptions {
 
 interface Theme {}
 
+function postfixVariant(label: string, postfix: string): Variant {
+  return (input) => {
+    if (input === undefined || !input.startsWith(`${label}:`)) return input;
+
+    return {
+      // slice `hover:` prefix and passed to the next variants and rules
+      matcher: input.slice(label.length + 1),
+      selector: (s) => `${s}:${postfix}`,
+    };
+  };
+}
+
 export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
   let baseGap = options.baseGap || 4;
   let baseSpace = options.baseSpace || 40;
@@ -15,8 +27,13 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
   return {
     name: "@spritz-css/uno-preset",
     preflights: [{ getCSS: () => layout }],
-    // variants: variants(options),
     options,
+    variants: [
+      postfixVariant("hover", "hover"),
+      postfixVariant("focus", "focus-visible"),
+      postfixVariant("active", "active"),
+      postfixVariant("odd", "active"),
+    ],
     rules: [
       // cusp for changing the switcher from horizontal to vertical
       [/^cusp-(\d+)$/, ([, n]) => ({ "--cusp": `${parseInt(n) * baseSpace}px` })],
