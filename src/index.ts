@@ -8,6 +8,21 @@ export interface PresetSpritzOptions extends PresetOptions {
 
 interface Theme {}
 
+export function parentVariant(name: string, parent: string): Variant {
+  return (input) => {
+    if (input === undefined || !input.startsWith(`${name}:`)) return input;
+
+    return {
+      matcher: input.slice(name.length + 1),
+      handle: (input, next) =>
+        next({
+          ...input,
+          parent: `${input.parent ? `${input.parent} $$ ` : ""}${parent}`,
+        }),
+    };
+  };
+}
+
 function postfixVariant(label: string, postfix: string): Variant {
   return (input) => {
     if (input === undefined || !input.startsWith(`${label}:`)) return input;
@@ -33,6 +48,9 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       postfixVariant("focus", "focus-visible"),
       postfixVariant("active", "active"),
       postfixVariant("odd", "active"),
+      parentVariant("dark", "@media (prefers-color-scheme: dark)"),
+      parentVariant("light", "@media (prefers-color-scheme: light)"),
+      parentVariant("print", "@media print"),
     ],
     rules: [
       // cusp for changing the switcher from horizontal to vertical
@@ -61,6 +79,17 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^grow-(\d+)$/, ([, n]) => ({ "flex-grow": `${n}` })],
       ["grow-max", { "flex-grow": 999 }],
       [/^shrink-(\d+)$/, ([, n]) => ({ "flex-shrink": `${n}` })],
+
+      // Positioning, hiding
+      ["isolate", { isolation: "isolate" }],
+
+      ["static", { position: "static" }],
+      ["relative", { position: "relative" }],
+      ["absolute", { position: "absolute" }],
+      ["fixed", { position: "fixed" }],
+      ["sticky", { position: "sticky" }],
+
+      ["hidden", { display: "none" }],
 
       // Gaps: small spaces use for gaps, paddings, etc.
       [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseGap}px` })],
