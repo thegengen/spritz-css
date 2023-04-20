@@ -44,6 +44,26 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^grow-(\d+)$/, ([, n]) => ({ "flex-grow": `${n}` })],
       ["grow-max", { "flex-grow": 999 }],
       [/^shrink-(\d+)$/, ([, n]) => ({ "flex-shrink": `${n}` })],
+
+      // Gaps: small spaces use for gaps, paddings, etc.
+      [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseGap}px` })],
+      [/^gap-inline-(\d+)$/, ([, n]) => ({ "column-gap": `${parseInt(n) * baseGap}px` })],
+      [/^gap-block-(\d+)$/, ([, n]) => ({ "row-gap": `${parseInt(n) * baseGap}px` })],
+
+      [/^pad-(\d+)$/, ([, n]) => ({ padding: `${parseInt(n) * baseGap}px` })],
+      [/^pad-inline-(\d+)$/, ([, n]) => ({ "padding-inline": `${parseInt(n) * baseGap}px` })],
+      [/^pad-block-(\d+)$/, ([, n]) => ({ "padding-block": `${parseInt(n) * baseGap}px` })],
+
+      [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `${parseInt(n) * baseSpace}px` })],
+      [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${parseInt(n) * baseSpace}px, 100%)` })],
+      [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `${parseInt(n) * baseSpace}px` })],
+
+      [/^min-block-(\d+)$/, ([, n]) => ({ "min-block-size": `${parseInt(n) * baseGap}px` })],
+      [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${parseInt(n) * baseGap}px` })],
+      [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${parseInt(n) * baseGap}px` })],
+
+      [/^nudge-([\d\.]+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
+      [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${parseInt(n) * baseGap}px` })],
     ],
   };
 }
