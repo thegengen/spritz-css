@@ -193,6 +193,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
 
       [/^shadow-([\w\-]+)$/, ([, s]) => ({ "box-shadow": `var(--shadow-${s})` })],
       [/^blur-(\d+)$/, ([, n]) => ({ "backdrop-filter": `blur(${parseInt(n) * baseGap}px)` })],
+      [/^opacity-(\d+)$/, ([, n]) => ({ opacity: `${parseFloat(n) / 100}` })],
 
       [/^fg-([\w\-]+)$/, ([, s]) => ({ "text-color": `var(--color-${s})` })],
       [/^bg-([\w\-]+)$/, ([, s]) => ({ "background-color": `var(--color-${s})` })],
