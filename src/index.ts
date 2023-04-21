@@ -25,7 +25,7 @@ export function parentVariant(name: string, parent: string): Variant {
   };
 }
 
-export function breakpointVariants(): string | Variant {
+export function breakpointVariants(): Variant {
   return (input: string, ctx: Readonly<VariantContext<Theme>>) => {
     let breakpoints = ctx?.theme?.breakpoints;
 
@@ -48,7 +48,7 @@ export function breakpointVariants(): string | Variant {
   };
 }
 
-function postfixVariant(label: string, postfix: string): string | Variant {
+function postfixVariant(label: string, postfix: string): Variant {
   return (input) => {
     if (input === undefined || !input.startsWith(`${label}:`)) return input;
 
