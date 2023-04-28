@@ -115,6 +115,11 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["fixed", { position: "fixed" }],
       ["sticky", { position: "sticky" }],
 
+      [/^top-(\d+)$/, ([, n]) => ({ top: `${parseInt(n) * baseGap}px` })],
+      [/^bottom-(\d+)$/, ([, n]) => ({ bottom: `${parseInt(n) * baseGap}px` })],
+      [/^left-(\d+)$/, ([, n]) => ({ left: `${parseInt(n) * baseGap}px` })],
+      [/^right-(\d+)$/, ([, n]) => ({ right: `${parseInt(n) * baseGap}px` })],
+
       ["hidden", { display: "none" }],
 
       // Gaps: small spaces use for gaps, paddings, etc.
@@ -195,7 +200,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^blur-(\d+)$/, ([, n]) => ({ "backdrop-filter": `blur(${parseInt(n) * baseGap}px)` })],
       [/^opacity-(\d+)$/, ([, n]) => ({ opacity: `${parseFloat(n) / 100}` })],
 
-      [/^fg-([\w\-]+)$/, ([, s]) => ({ "text-color": `var(--color-${s})` })],
+      [/^fg-([\w\-]+)$/, ([, s]) => ({ color: `var(--color-${s})` })],
       [/^bg-([\w\-]+)$/, ([, s]) => ({ "background-color": `var(--color-${s})` })],
       [/^border-([a-zA-Z][\w\-]+)$/, ([, s]) => ({ "border-color": `var(--color-${s})` })],
       [/^outline-([a-zA-Z][\w\-]+)$/, ([, s]) => ({ "outline-color": `var(--color-${s})` })],
