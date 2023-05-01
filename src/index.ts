@@ -106,6 +106,10 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["grow-max", { "flex-grow": 999 }],
       [/^shrink-(\d+)$/, ([, n]) => ({ "flex-shrink": `${n}` })],
 
+      // Box model
+      ["box-content", { "box-sizing": "content-box" }],
+      ["box-border", { "box-sizing": "border-box" }],
+
       // Positioning, hiding
       ["isolate", { isolation: "isolate" }],
 
