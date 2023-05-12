@@ -126,6 +126,13 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
 
       ["hidden", { display: "none" }],
 
+      // Overflow
+      ["overflow-visible", { overflow: "visible" }],
+      ["overflow-hidden", { overflow: "hidden" }],
+      ["overflow-clip", { overflow: "clip" }],
+      ["overflow-scroll", { overflow: "scroll" }],
+      ["overflow-auto", { overflow: "auto" }],
+
       // Gaps: small spaces use for gaps, paddings, etc.
       [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseGap}px` })],
       [/^gap-inline-(\d+)$/, ([, n]) => ({ "column-gap": `${parseInt(n) * baseGap}px` })],
