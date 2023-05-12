@@ -123,6 +123,9 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^right-(\d+)$/, ([, n]) => ({ right: `${parseInt(n) * baseSize}px` })],
 
       ["hidden", { display: "none" }],
+      ["block", { display: "block" }],
+      ["inline-block", { display: "inline-block" }],
+      ["flex", { display: "flex" }],
 
       // Overflow
       ["overflow-visible", { overflow: "visible" }],
