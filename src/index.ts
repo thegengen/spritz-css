@@ -38,6 +38,7 @@ export function breakpointVariants(): Variant {
             next({
               ...input,
               parent: `${input.parent ? `${input.parent} $$ ` : ""}@media (min-width: ${breakpoints[name]})`,
+              parentOrder: Object.keys(breakpoints).indexOf(name),
             }),
         };
       }
