@@ -102,7 +102,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // Flexbox controls
       [/^basis-(\d+)$/, ([, n]) => ({ "flex-basis": `${parseInt(n) * baseSize}px` })],
       [/^grow-(\d+)$/, ([, n]) => ({ "flex-grow": `${n}` })],
-      ["grow-max", { "flex-grow": 999 }],
+      ["grow-max", { "flex-grow": 9999 }],
       [/^shrink-(\d+)$/, ([, n]) => ({ "flex-shrink": `${n}` })],
 
       // Box model
@@ -144,7 +144,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^pad-inline-(\d+)$/, ([, n]) => ({ "padding-inline": `${parseInt(n) * baseSize}px` })],
       [/^pad-block-(\d+)$/, ([, n]) => ({ "padding-block": `${parseInt(n) * baseSize}px` })],
 
-      [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `${parseInt(n) * baseSize}px` })],
+      [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
       [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
       [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `${parseInt(n) * baseSize}px` })],
       ["min-inline-full", { "min-inline-size": "100%" }],
@@ -161,10 +161,16 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["min-width-screen", { "min-width": "100vw" }],
       ["max-width-screen", { "max-width": "100vw" }],
       ["width-screen", { width: "100vw" }],
+      ["min-width-auto", { "min-width": "auto" }],
+      ["max-width-auto", { "max-width": "auto" }],
+      ["width-auto", { width: "auto" }],
 
       ["min-height-screen", { "min-height": "100vh" }],
       ["max-height-screen", { "max-height": "100vh" }],
       ["height-screen", { height: "100vh" }],
+      ["min-height-auto", { "min-height": "auto" }],
+      ["max-height-auto", { "max-height": "auto" }],
+      ["height-auto", { height: "auto" }],
 
       [/^nudge-([\d\.]+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
       [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${parseInt(n) * baseSize}px` })],
