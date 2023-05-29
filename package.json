@@ -1,5 +1,5 @@
 {
-  "name": "@spritzcss/uno-preset",
+  "name": "@spritz-css/uno-preset",
   "description": "A light CSS framework that wants to make your life more fun",
   "version": "0.0.5",
   "author": "Eugen Minciu <eugen@gengen.io>",
@@ -13,5 +13,17 @@
   "devDependencies": {
     "unocss": "^0.50.6",
     "typescript": "^5.0.4"
-  }
+  },
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thegengen/spritz-css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thegengen/spritz-css/issues"
+  },
+  "homepage": "https://github.com/thegengen/spritz-css#readme"
 }
