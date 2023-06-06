@@ -129,6 +129,18 @@ export default `
 
 .row {
   display: flex;
-  /* TODO: truncate first? truncate last? */
+  align-items: center;
+}
+
+.visually-hidden:not(.except-on-focus),
+.visually-hidden.except-on-focus:not(:focus-within) {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 }
 `;

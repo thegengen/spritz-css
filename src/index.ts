@@ -1,4 +1,4 @@
-import type { Preset, PresetOptions, Variant, VariantContext } from "@unocss/core";
+import type { Preset, PresetOptions, Variant, VariantContext, Rule } from "@unocss/core";
 import layout from "./layout.css";
 
 export interface PresetSpritzOptions extends PresetOptions {
@@ -31,15 +31,29 @@ export function breakpointVariants(): Variant {
     if (input === undefined || breakpoints === undefined) return input;
 
     for (let name of Object.keys(breakpoints)) {
+      if (input.startsWith(`below-${name}:`)) {
+        return {
+          matcher: input.slice(name.length + 7),
+          handle: (input, next) => {
+            return next({
+              ...input,
+              parent: `@media (max-width: calc(${breakpoints[name]} - 1px))`,
+              parentOrder: 1000 - Object.keys(breakpoints).indexOf(name) - 1,
+            });
+          },
+        };
+      }
+
       if (input.startsWith(`${name}:`)) {
         return {
           matcher: input.slice(name.length + 1),
-          handle: (input, next) =>
-            next({
+          handle: (input, next) => {
+            return next({
               ...input,
-              parent: `${input.parent ? `${input.parent} $$ ` : ""}@media (min-width: ${breakpoints[name]})`,
-              parentOrder: Object.keys(breakpoints).indexOf(name),
-            }),
+              parent: `@media (min-width: ${breakpoints[name]})`,
+              parentOrder: 1000 + Object.keys(breakpoints).indexOf(name) + 1,
+            });
+          },
         };
       }
     }
@@ -72,6 +86,8 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       postfixVariant("focus", "focus-visible"),
       postfixVariant("active", "active"),
       postfixVariant("odd", "active"),
+      postfixVariant("last", "last-of-type"),
+      postfixVariant("not-last", "not(:last-of-type)"),
       parentVariant("dark", "@media (prefers-color-scheme: dark)"),
       parentVariant("light", "@media (prefers-color-scheme: light)"),
       parentVariant("print", "@media print"),
@@ -109,7 +125,9 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["box-content", { "box-sizing": "content-box" }],
       ["box-border", { "box-sizing": "border-box" }],
 
-      // Positioning, hiding
+      // Hiding, Positioning, isolation
+      ["hidden", { display: "none" }],
+
       ["isolate", { isolation: "isolate" }],
 
       ["static", { position: "static" }],
@@ -122,11 +140,6 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^bottom-(\d+)$/, ([, n]) => ({ bottom: `${parseInt(n) * baseSize}px` })],
       [/^left-(\d+)$/, ([, n]) => ({ left: `${parseInt(n) * baseSize}px` })],
       [/^right-(\d+)$/, ([, n]) => ({ right: `${parseInt(n) * baseSize}px` })],
-
-      ["hidden", { display: "none" }],
-      ["block", { display: "block" }],
-      ["inline-block", { display: "inline-block" }],
-      ["flex", { display: "flex" }],
 
       // Overflow
       ["overflow-visible", { overflow: "visible" }],
@@ -145,19 +158,24 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^pad-block-(\d+)$/, ([, n]) => ({ "padding-block": `${parseInt(n) * baseSize}px` })],
 
       [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
-      [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
-      [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `${parseInt(n) * baseSize}px` })],
       ["min-inline-full", { "min-inline-size": "100%" }],
+
+      [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
       ["max-inline-full", { "max-inline-size": "100%" }],
+
+      [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
       ["inline-full", { "inline-size": "100%" }],
 
       [/^min-block-(\d+)$/, ([, n]) => ({ "min-block-size": `${parseInt(n) * baseSize}px` })],
-      [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${parseInt(n) * baseSize}px` })],
-      [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${parseInt(n) * baseSize}px` })],
       ["min-block-full", { "min-block-size": "100%" }],
+
+      [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${parseInt(n) * baseSize}px` })],
       ["max-block-full", { "max-block-size": "100%" }],
+
+      [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${parseInt(n) * baseSize}px` })],
       ["block-full", { "block-size": "100%" }],
 
+      // TODO: we can probably remove these
       ["min-width-screen", { "min-width": "100vw" }],
       ["max-width-screen", { "max-width": "100vw" }],
       ["width-screen", { width: "100vw" }],
@@ -174,8 +192,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
 
       [/^nudge-([\d\.]+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
       [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${parseInt(n) * baseSize}px` })],
-
-      // TODO: do we want inset? will that get used a lot?
+      // TODO: indent/unindent
 
       ["aspect-square", { "aspect-ratio": "1/1" }],
       ["aspect-portrait", { "aspect-ratio": "3/4" }],
@@ -224,19 +241,17 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["order-first", { order: "-999" }],
       ["order-last", { order: "999" }],
 
-      [/^border-([\d\.]+)$/, ([, n]) => ({ "border-width": `${n}px` })],
-      [/^outline-([\d\.]+)$/, ([, n]) => ({ "outline-width": `${n}px` })],
       [/^radius-(\d+)$/, ([, n]) => ({ "border-radius": `${parseInt(n) * baseSize}px` })],
       ["radius-full", { "border-radius": "9999px" }],
 
-      [/^shadow-([\w\-]+)$/, ([, s]) => ({ "box-shadow": `var(--shadow-${s})` })],
       [/^blur-(\d+)$/, ([, n]) => ({ "backdrop-filter": `blur(${parseInt(n) * baseSize}px)` })],
       [/^opacity-(\d+)$/, ([, n]) => ({ opacity: `${parseFloat(n) / 100}` })],
 
       [/^fg-([\w\-]+)$/, ([, s]) => ({ color: `var(--color-${s})` })],
       [/^bg-([\w\-]+)$/, ([, s]) => ({ "background-color": `var(--color-${s})` })],
-      [/^border-([a-zA-Z][\w\-]+)$/, ([, s]) => ({ "border-color": `var(--color-${s})` })],
-      [/^outline-([a-zA-Z][\w\-]+)$/, ([, s]) => ({ "outline-color": `var(--color-${s})` })],
+
+      [/^border-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ border: `solid 1px var(--color-${s})` })],
+      [/^outline-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ outline: `solid 1px var(--color-${s})` })],
     ],
   };
 }
