@@ -6,7 +6,7 @@ export interface PresetSpritzOptions extends PresetOptions {
 }
 
 interface Theme {
-  breakpoints?: Record<string, string>;
+  mediaQueries?: Record<string, string>;
 }
 
 export function parentVariant(name: string, parent: string): Variant {
@@ -24,34 +24,27 @@ export function parentVariant(name: string, parent: string): Variant {
   };
 }
 
-export function breakpointVariants(): Variant {
+export function mediaVariants(): Variant {
   return (input: string, ctx: Readonly<VariantContext<Theme>>) => {
-    let breakpoints = ctx?.theme?.breakpoints;
+    let themeQueries = ctx?.theme?.mediaQueries || {};
+    let mediaQueries = {
+      print: "print",
+      dark: "(prefers-color-scheme: dark)",
+      light: "(prefers-color-scheme: light)",
+      ...themeQueries,
+    };
 
-    if (input === undefined || breakpoints === undefined) return input;
+    if (input === undefined || mediaQueries === undefined) return input;
 
-    for (let name of Object.keys(breakpoints)) {
-      if (input.startsWith(`below-${name}:`)) {
-        return {
-          matcher: input.slice(name.length + 7),
-          handle: (input, next) => {
-            return next({
-              ...input,
-              parent: `@media (max-width: calc(${breakpoints[name]} - 1px))`,
-              parentOrder: 1000 - Object.keys(breakpoints).indexOf(name) - 1,
-            });
-          },
-        };
-      }
-
+    for (let name of Object.keys(mediaQueries)) {
       if (input.startsWith(`${name}:`)) {
         return {
           matcher: input.slice(name.length + 1),
           handle: (input, next) => {
             return next({
               ...input,
-              parent: `@media (min-width: ${breakpoints[name]})`,
-              parentOrder: 1000 + Object.keys(breakpoints).indexOf(name) + 1,
+              parent: `@media ${mediaQueries[name]}`,
+              parentOrder: Object.keys(mediaQueries).indexOf(name) + 1,
             });
           },
         };
@@ -88,10 +81,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       postfixVariant("odd", "active"),
       postfixVariant("last", "last-of-type"),
       postfixVariant("not-last", "not(:last-of-type)"),
-      parentVariant("dark", "@media (prefers-color-scheme: dark)"),
-      parentVariant("light", "@media (prefers-color-scheme: light)"),
-      parentVariant("print", "@media print"),
-      breakpointVariants(),
+      mediaVariants(),
     ].flat(),
     rules: [
       // SLCBT = SELECTOR + LAYOUT + CONTAINER + BOX + TYPOGRAPHY (pronounced "slick bit")
@@ -103,7 +93,6 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // LAYOUTS: layouts from Every Layout (details coming soon)
       // These typically control the layout of children elements
       // TODO: maybe move center below since it doesn't behave that way.
-      //
       // Gaps control the spacing between children.
       [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseSize}px` })],
       [/^gap-inline-(\d+)$/, ([, n]) => ({ "column-gap": `${parseInt(n) * baseSize}px` })],
@@ -209,6 +198,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // seen with the naked eye. They have colors, background colors, borders etc.
       //
       // Foreground and background colors
+      // fg-gray-500 .fg-gray-500 { color: var(--color-gray-500); }
       [/^fg-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ color: `var(--color-${s})` })],
       [/^bg-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ "background-color": `var(--color-${s})` })],
       // Opacity
