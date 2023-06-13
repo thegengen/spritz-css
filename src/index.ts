@@ -95,8 +95,11 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // TODO: maybe move center below since it doesn't behave that way.
       // Gaps control the spacing between children.
       [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseSize}px` })],
+      [/^gap--(\w+)$/, ([, s]) => ({ gap: `var(--gap--${s})` })],
       [/^gap-inline-(\d+)$/, ([, n]) => ({ "column-gap": `${parseInt(n) * baseSize}px` })],
+      [/^gap-inline--(\w+)$/, ([, s]) => ({ "column-gap": `var(--gap-inline--${s})` })],
       [/^gap-block-(\d+)$/, ([, n]) => ({ "row-gap": `${parseInt(n) * baseSize}px` })],
+      [/^gap-block--(\w+)$/, ([, s]) => ({ "row-gap": `var(--gap-block--${s})` })],
       // Alignment
       ["align-start", { "align-items": "flex-start" }],
       ["align-end", { "align-items": "flex-end" }],
@@ -131,17 +134,23 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // Inline dimensions (minimum, maximum, and set size) -- these are clipped to 100% of the parent to avoid
       // any overflow scenarios
       [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
+      [/^min-inline--(\w+)$/, ([, s]) => ({ "min-inline-size": `var(--min-inline--${s})` })],
       ["min-inline-full", { "min-inline-size": "100%" }],
       [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
+      [/^max-inline--(\w+)$/, ([, s]) => ({ "max-inline-size": `var(--max-inline--${s})` })],
       ["max-inline-full", { "max-inline-size": "100%" }],
       [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
+      [/^inline--(\w+)$/, ([, s]) => ({ "inline-size": `var(--inline--${s})` })],
       ["inline-full", { "inline-size": "100%" }],
       // Block dimensions (similar to above)
       [/^min-block-(\d+)$/, ([, n]) => ({ "min-block-size": `${parseInt(n) * baseSize}px` })],
+      [/^min-block--(\w+)$/, ([, s]) => ({ "min-block-size": `var(--min-block--${s})` })],
       ["min-block-full", { "min-block-size": "100%" }],
       [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${parseInt(n) * baseSize}px` })],
+      [/^max-block--(\w+)$/, ([, s]) => ({ "max-block-size": `var(--max-block--${s})` })],
       ["max-block-full", { "max-block-size": "100%" }],
       [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${parseInt(n) * baseSize}px` })],
+      [/^block--(\w+)$/, ([, s]) => ({ "block-size": `var(--block--${s})` })],
       ["block-full", { "block-size": "100%" }],
       // These are not semantic because vb,vi are too new to be supported in the browser.
       ["min-width-screen", { "min-width": "100vw" }],
@@ -172,13 +181,20 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["fixed", { position: "fixed" }],
       ["sticky", { position: "sticky" }],
       [/^top-(\d+)$/, ([, n]) => ({ top: `${parseInt(n) * baseSize}px` })],
+      [/^top--(\w+)$/, ([, s]) => ({ top: `var(--top--${s})` })],
       [/^bottom-(\d+)$/, ([, n]) => ({ bottom: `${parseInt(n) * baseSize}px` })],
+      [/^bottom--(\w+)$/, ([, s]) => ({ bottom: `var(--bottom--${s})` })],
       [/^left-(\d+)$/, ([, n]) => ({ left: `${parseInt(n) * baseSize}px` })],
+      [/^left--(\w+)$/, ([, s]) => ({ left: `var(--left--${s})` })],
       [/^right-(\d+)$/, ([, n]) => ({ right: `${parseInt(n) * baseSize}px` })],
+      [/^right--(\w+)$/, ([, s]) => ({ right: `var(--right--${s})` })],
       // TODO: I so want this to exist on boxes, not sure if that makes sense.
       [/^pad-(\d+)$/, ([, n]) => ({ padding: `${parseInt(n) * baseSize}px` })],
+      [/^pad--(\w+)$/, ([, s]) => ({ padding: `var(--pad--${s})` })],
       [/^pad-inline-(\d+)$/, ([, n]) => ({ "padding-inline": `${parseInt(n) * baseSize}px` })],
+      [/^pad-inline--(\w+)$/, ([, s]) => ({ "padding-inline": `var(--pad-inline--${s})` })],
       [/^pad-block-(\d+)$/, ([, n]) => ({ "padding-block": `${parseInt(n) * baseSize}px` })],
+      [/^pad-block--(\w+)$/, ([, s]) => ({ "padding-block": `var(--pad-block--${s})` })],
       // Z-Index
       [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
       // Ordering
