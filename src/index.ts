@@ -255,7 +255,8 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["no-line", { "text-decoration-line": "none" }],
       ["decoration-from-font", { "text-decoration-thickness": "from-font" }],
       [/^decoration-([\d\.]+)$/, ([, n]) => ({ "text-decoration-thickness": `${n}px` })],
-      // Truncation
+      // Wrapping, truncation
+      ["no-wrap", { "white-space": "nowrap" }],
       ["truncate", { overflow: "hidden", "text-overflow": "ellipsis", "white-space": "nowrap" }],
       [
         /^line-clamp-(\d+)$/,

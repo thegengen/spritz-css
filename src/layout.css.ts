@@ -132,6 +132,22 @@ export default `
   align-items: center;
 }
 
+.row.split-first > :first-child {
+  margin-inline-end: auto;
+}
+
+.row.split-last > :last-child {
+  margin-inline-start: auto;
+}
+
+.boundary {
+  position: relative;
+}
+
+.bound {
+  position: absolute;
+}
+
 .visually-hidden:not(.except-on-focus),
 .visually-hidden.except-on-focus:not(:focus-within) {
   position: absolute;
