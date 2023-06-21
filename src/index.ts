@@ -157,13 +157,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${parseInt(n) * baseSize}px` })],
       [/^block--(\w+)$/, ([, s]) => ({ "block-size": `var(--block--${s})` })],
       ["block-full", { "block-size": "100%" }],
-      // These are not semantic because vb,vi are too new to be supported in the browser.
-      ["min-width-screen", { "min-width": "100vw" }],
-      ["max-width-screen", { "max-width": "100vw" }],
-      ["width-screen", { width: "100vw" }],
-      ["min-height-screen", { "min-height": "100vh" }],
-      ["max-height-screen", { "max-height": "100vh" }],
-      ["height-screen", { height: "100vh" }],
+
       // Aspect-ratios
       [/^aspect-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ "aspect-ratio": `var(--aspect-${s})` })],
       ["aspect-square", { "aspect-ratio": "1/1" }],
