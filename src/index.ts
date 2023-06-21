@@ -98,9 +98,9 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // TODO: maybe move center below since it doesn't behave that way.
 
       // Where the switcher switches from horizontal to vertical layout
-      [/^cusp-(\d+)$/, ([, n]) => ({ "--cusp": `${parseInt(n) * baseSize}px` })],
+      [/^threshold-(\d+)$/, ([, n]) => ({ "--spritz--threshold": `${parseInt(n) * baseSize}px` })],
       // Minimum item width for item grids
-      [/^min-item-width-(\d+)$/, ([, n]) => ({ "--min-item-width": `${parseInt(n) * baseSize}px` })],
+      [/^item-width-(\d+)$/, ([, n]) => ({ "--spritz--item-width": `${parseInt(n) * baseSize}px` })],
 
       // Gaps control the spacing between children.
       [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseSize}px` })],
@@ -184,14 +184,15 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["absolute", { position: "absolute" }],
       ["fixed", { position: "fixed" }],
       ["sticky", { position: "sticky" }],
-      [/^top-(\d+)$/, ([, n]) => ({ top: `${parseInt(n) * baseSize}px` })],
-      [/^top--(\w+)$/, ([, s]) => ({ top: `var(--top--${s})` })],
-      [/^bottom-(\d+)$/, ([, n]) => ({ bottom: `${parseInt(n) * baseSize}px` })],
-      [/^bottom--(\w+)$/, ([, s]) => ({ bottom: `var(--bottom--${s})` })],
-      [/^left-(\d+)$/, ([, n]) => ({ left: `${parseInt(n) * baseSize}px` })],
-      [/^left--(\w+)$/, ([, s]) => ({ left: `var(--left--${s})` })],
-      [/^right-(\d+)$/, ([, n]) => ({ right: `${parseInt(n) * baseSize}px` })],
-      [/^right--(\w+)$/, ([, s]) => ({ right: `var(--right--${s})` })],
+      [/^block-start-(\d+)$/, ([, n]) => ({ "inset-block-start": `${parseInt(n) * baseSize}px` })],
+      [/^block-start--(\w+)$/, ([, s]) => ({ "inset-block-start": `var(--block-start--${s})` })],
+      [/^block-end-(\d+)$/, ([, n]) => ({ "inset-block-end": `${parseInt(n) * baseSize}px` })],
+      [/^block-end--(\w+)$/, ([, s]) => ({ "inset-block-end": `var(--block-end--${s})` })],
+      [/^inline-start-(\d+)$/, ([, n]) => ({ "inset-inline-start": `${parseInt(n) * baseSize}px` })],
+      [/^inline-start--(\w+)$/, ([, s]) => ({ "inset-inline-start": `var(--inline-start--${s})` })],
+      [/^inline-end-(\d+)$/, ([, n]) => ({ "inset-inline-end": `${parseInt(n) * baseSize}px` })],
+      [/^inline-end--(\w+)$/, ([, s]) => ({ "inset-inline-end": `var(--inline-end--${s})` })],
+
       // TODO: I so want this to exist on boxes, not sure if that makes sense.
       [/^pad-(\d+)$/, ([, n]) => ({ padding: `${parseInt(n) * baseSize}px` })],
       [/^pad--(\w+)$/, ([, s]) => ({ padding: `var(--pad--${s})` })],

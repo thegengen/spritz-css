@@ -80,7 +80,7 @@ export default `
 
 .switcher > * {
   flex-grow: 1;
-  flex-basis: calc((var(--cusp) - 100%) * 999);
+  flex-basis: calc((var(--spritz--threshold) - 100%) * 999);
 }
 
 .cover {
@@ -95,7 +95,7 @@ export default `
 
 .item-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(var(--min-item-width), 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--spritz--item-width), 100%), 1fr));
 }
 
 .frame {
