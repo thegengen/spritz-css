@@ -78,8 +78,11 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       postfixVariant("hover", "hover"),
       postfixVariant("focus", "focus-visible"),
       postfixVariant("active", "active"),
-      postfixVariant("odd", "active"),
+      postfixVariant("even", ":nth-of-type(even)"),
+      postfixVariant("odd", ":nth-of-type(odd)"),
+      postfixVariant("first", "first-of-type"),
       postfixVariant("last", "last-of-type"),
+      postfixVariant("not-first", "not(:first-of-type)"),
       postfixVariant("not-last", "not(:last-of-type)"),
       mediaVariants(),
     ].flat(),
@@ -93,6 +96,12 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // LAYOUTS: layouts from Every Layout (details coming soon)
       // These typically control the layout of children elements
       // TODO: maybe move center below since it doesn't behave that way.
+
+      // Where the switcher switches from horizontal to vertical layout
+      [/^cusp-(\d+)$/, ([, n]) => ({ "--cusp": `${parseInt(n) * baseSize}px` })],
+      // Minimum item width for item grids
+      [/^min-item-width-(\d+)$/, ([, n]) => ({ "--min-item-width": `${parseInt(n) * baseSize}px` })],
+
       // Gaps control the spacing between children.
       [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseSize}px` })],
       [/^gap--(\w+)$/, ([, s]) => ({ gap: `var(--gap--${s})` })],
@@ -117,11 +126,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["hidden", { display: "none" }],
       // Isolation: create a stacking context for children's z-indexes
       ["isolate", { isolation: "isolate" }],
-      // TODO: does gap go here?
-      // Where the switcher switches from horizontal to vertical layout
-      [/^cusp-(\d+)$/, ([, n]) => ({ "--cusp": `${parseInt(n) * baseSize}px` })],
-      // Minimum item width for item grids
-      [/^min-item-width-(\d+)$/, ([, n]) => ({ "--min-item-width": `${parseInt(n) * baseSize}px` })],
+
       // Overflow: control what happens when the children don't fit in this container
       ["overflow-visible", { overflow: "visible" }],
       ["overflow-hidden", { overflow: "hidden" }],
@@ -171,10 +176,9 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // Box model: control how the dimensions of this element are calculated
       ["box-content", { "box-sizing": "content-box" }],
       ["box-border", { "box-sizing": "border-box" }],
+
       // Positioning: control the position of this element
-      //
-      // TODO: sometimes relative is used with no attributes to create a parent for absolutely positioned children
-      //       do we want to create a semantic name for this?
+      ["bound", { position: "absolute" }],
       ["static", { position: "static" }],
       ["relative", { position: "relative" }],
       ["absolute", { position: "absolute" }],
@@ -197,6 +201,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^pad-block--(\w+)$/, ([, s]) => ({ "padding-block": `var(--pad-block--${s})` })],
       // Z-Index
       [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
+
       // Ordering
       [/^order-(\d+)$/, ([, n]) => ({ order: `${n}` })],
       ["order-first", { order: "-999" }],
@@ -205,10 +210,6 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^nudge-([\d\.]+)$/, ([, n]) => ({ "margin-block-start": `${n}px` })],
       [/^push-(\d+)$/, ([, n]) => ({ "margin-block-end": `${parseInt(n) * baseSize}px` })],
       // TODO: pull/indent/unindent
-      // Floats: only use these when you really need to
-      ["float-left", { float: "left" }],
-      ["float-right", { float: "right" }],
-      ["float-none", { float: "none" }],
 
       // BOXES: While almost everything is a box in HTML & CSS, these classes refer to boxes that can be
       // seen with the naked eye. They have colors, background colors, borders etc.
@@ -263,7 +264,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
         ([, n]) => ({
           overflow: "hidden",
           display: "-webkit-box",
-          "-webkit-box-orient": "vertical",
+          "-webkit-box-orient": "block-axis",
           "-webkit-line-clamp": `${n}`,
         }),
       ],
@@ -271,6 +272,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["text-start", { "text-align": "start" }],
       ["text-end", { "text-align": "end" }],
       ["text-center", { "text-align": "center" }],
+      ["text-justify", { "text-align": "justify" }],
       // List styles; putting them here is a bit random perhaps, but what can you do? ¯\_(ツ)_/¯
       ["list-inside", { "list-style-position": "inside" }],
       ["list-outside", { "list-style-position": "outside" }],

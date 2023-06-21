@@ -20,15 +20,22 @@ export default `
   margin-block-start: auto;
 }
 
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row.split-first > :first-child {
+  margin-inline-end: auto;
+}
+
+.row.split-last > :last-child {
+  margin-inline-start: auto;
+}
+
 .center {
   box-sizing: content-box;
   margin-inline: auto;
-}
-
-.center-contents {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .cluster {
@@ -44,6 +51,12 @@ export default `
 
 .cluster.split-last > :last-child {
   margin-inline-start: auto;
+}
+
+.center-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .with-sidebar {
@@ -127,25 +140,8 @@ export default `
   display: none;
 }
 
-.row {
-  display: flex;
-  align-items: center;
-}
-
-.row.split-first > :first-child {
-  margin-inline-end: auto;
-}
-
-.row.split-last > :last-child {
-  margin-inline-start: auto;
-}
-
 .boundary {
   position: relative;
-}
-
-.bound {
-  position: absolute;
 }
 
 .visually-hidden:not(.except-on-focus),
