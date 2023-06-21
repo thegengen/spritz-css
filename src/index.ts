@@ -236,6 +236,8 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["outline-dashed", { "outline-style": "dashed" }],
       ["outline-transparent", { "outline-color": "transparent" }],
       [/^outline-([\d\.]+)$/, ([, n]) => ({ "outline-width": `${n}px` })],
+      // Shadows
+      [/^shadow--([a-zA-Z][\w\-]*)$/, ([, s]) => ({ "box-shadow": `var(--shadow--${s})` })],
 
       // TYPOGRAPHY: Most of the typography should be defined in self-contained classes like
       // .type-body, .type-heading, .type-subheading. Most of this is just for tweaking such
