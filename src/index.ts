@@ -104,11 +104,11 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
 
       // Gaps control the spacing between children.
       [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseSize}px` })],
-      [/^gap--(\w+)$/, ([, s]) => ({ gap: `var(--gap--${s})` })],
+      [/^gap--([\w\-]+)$/, ([, s]) => ({ gap: `var(--gap--${s})` })],
       [/^gap-inline-(\d+)$/, ([, n]) => ({ "column-gap": `${parseInt(n) * baseSize}px` })],
-      [/^gap-inline--(\w+)$/, ([, s]) => ({ "column-gap": `var(--gap-inline--${s})` })],
+      [/^gap-inline--([\w\-]+)$/, ([, s]) => ({ "column-gap": `var(--gap-inline--${s})` })],
       [/^gap-block-(\d+)$/, ([, n]) => ({ "row-gap": `${parseInt(n) * baseSize}px` })],
-      [/^gap-block--(\w+)$/, ([, s]) => ({ "row-gap": `var(--gap-block--${s})` })],
+      [/^gap-block--([\w\-]+)$/, ([, s]) => ({ "row-gap": `var(--gap-block--${s})` })],
       // Alignment
       ["align-start", { "align-items": "flex-start" }],
       ["align-end", { "align-items": "flex-end" }],
@@ -139,23 +139,23 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // Inline dimensions (minimum, maximum, and set size) -- these are clipped to 100% of the parent to avoid
       // any overflow scenarios
       [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
-      [/^min-inline--(\w+)$/, ([, s]) => ({ "min-inline-size": `var(--min-inline--${s})` })],
+      [/^min-inline--([\w\-]+)$/, ([, s]) => ({ "min-inline-size": `var(--min-inline--${s})` })],
       ["min-inline-full", { "min-inline-size": "100%" }],
       [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
-      [/^max-inline--(\w+)$/, ([, s]) => ({ "max-inline-size": `var(--max-inline--${s})` })],
+      [/^max-inline--([\w\-]+)$/, ([, s]) => ({ "max-inline-size": `var(--max-inline--${s})` })],
       ["max-inline-full", { "max-inline-size": "100%" }],
       [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
-      [/^inline--(\w+)$/, ([, s]) => ({ "inline-size": `var(--inline--${s})` })],
+      [/^inline--([\w\-]+)$/, ([, s]) => ({ "inline-size": `var(--inline--${s})` })],
       ["inline-full", { "inline-size": "100%" }],
       // Block dimensions (similar to above)
       [/^min-block-(\d+)$/, ([, n]) => ({ "min-block-size": `${parseInt(n) * baseSize}px` })],
-      [/^min-block--(\w+)$/, ([, s]) => ({ "min-block-size": `var(--min-block--${s})` })],
+      [/^min-block--([\w\-]+)$/, ([, s]) => ({ "min-block-size": `var(--min-block--${s})` })],
       ["min-block-full", { "min-block-size": "100%" }],
       [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${parseInt(n) * baseSize}px` })],
-      [/^max-block--(\w+)$/, ([, s]) => ({ "max-block-size": `var(--max-block--${s})` })],
+      [/^max-block--([\w\-]+)$/, ([, s]) => ({ "max-block-size": `var(--max-block--${s})` })],
       ["max-block-full", { "max-block-size": "100%" }],
       [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${parseInt(n) * baseSize}px` })],
-      [/^block--(\w+)$/, ([, s]) => ({ "block-size": `var(--block--${s})` })],
+      [/^block--([\w\-]+)$/, ([, s]) => ({ "block-size": `var(--block--${s})` })],
       ["block-full", { "block-size": "100%" }],
 
       // Aspect-ratios
@@ -179,21 +179,21 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["fixed", { position: "fixed" }],
       ["sticky", { position: "sticky" }],
       [/^block-start-(\d+)$/, ([, n]) => ({ "inset-block-start": `${parseInt(n) * baseSize}px` })],
-      [/^block-start--(\w+)$/, ([, s]) => ({ "inset-block-start": `var(--block-start--${s})` })],
+      [/^block-start--([\w\-]+)$/, ([, s]) => ({ "inset-block-start": `var(--block-start--${s})` })],
       [/^block-end-(\d+)$/, ([, n]) => ({ "inset-block-end": `${parseInt(n) * baseSize}px` })],
-      [/^block-end--(\w+)$/, ([, s]) => ({ "inset-block-end": `var(--block-end--${s})` })],
+      [/^block-end--([\w\-]+)$/, ([, s]) => ({ "inset-block-end": `var(--block-end--${s})` })],
       [/^inline-start-(\d+)$/, ([, n]) => ({ "inset-inline-start": `${parseInt(n) * baseSize}px` })],
-      [/^inline-start--(\w+)$/, ([, s]) => ({ "inset-inline-start": `var(--inline-start--${s})` })],
+      [/^inline-start--([\w\-]+)$/, ([, s]) => ({ "inset-inline-start": `var(--inline-start--${s})` })],
       [/^inline-end-(\d+)$/, ([, n]) => ({ "inset-inline-end": `${parseInt(n) * baseSize}px` })],
-      [/^inline-end--(\w+)$/, ([, s]) => ({ "inset-inline-end": `var(--inline-end--${s})` })],
+      [/^inline-end--([\w\-]+)$/, ([, s]) => ({ "inset-inline-end": `var(--inline-end--${s})` })],
 
       // TODO: I so want this to exist on boxes, not sure if that makes sense.
       [/^pad-(\d+)$/, ([, n]) => ({ padding: `${parseInt(n) * baseSize}px` })],
-      [/^pad--(\w+)$/, ([, s]) => ({ padding: `var(--pad--${s})` })],
+      [/^pad--([\w\-]+)$/, ([, s]) => ({ padding: `var(--pad--${s})` })],
       [/^pad-inline-(\d+)$/, ([, n]) => ({ "padding-inline": `${parseInt(n) * baseSize}px` })],
-      [/^pad-inline--(\w+)$/, ([, s]) => ({ "padding-inline": `var(--pad-inline--${s})` })],
+      [/^pad-inline--([\w\-]+)$/, ([, s]) => ({ "padding-inline": `var(--pad-inline--${s})` })],
       [/^pad-block-(\d+)$/, ([, n]) => ({ "padding-block": `${parseInt(n) * baseSize}px` })],
-      [/^pad-block--(\w+)$/, ([, s]) => ({ "padding-block": `var(--pad-block--${s})` })],
+      [/^pad-block--([\w\-]+)$/, ([, s]) => ({ "padding-block": `var(--pad-block--${s})` })],
       // Z-Index
       [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
 
