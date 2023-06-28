@@ -98,16 +98,16 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       // TODO: maybe move center below since it doesn't behave that way.
 
       // Where the switcher switches from horizontal to vertical layout
-      [/^threshold-(\d+)$/, ([, n]) => ({ "--spritz--threshold": `${parseInt(n) * baseSize}px` })],
+      [/^threshold-([\d\.]+)$/, ([, n]) => ({ "--spritz--threshold": `${parseFloat(n) * baseSize}px` })],
       // Minimum item width for item grids
-      [/^item-width-(\d+)$/, ([, n]) => ({ "--spritz--item-width": `${parseInt(n) * baseSize}px` })],
+      [/^item-width-([\d\.]+)$/, ([, n]) => ({ "--spritz--item-width": `${parseFloat(n) * baseSize}px` })],
 
       // Gaps control the spacing between children.
-      [/^gap-(\d+)$/, ([, n]) => ({ gap: `${parseInt(n) * baseSize}px` })],
+      [/^gap-([\d\.]+)$/, ([, n]) => ({ gap: `${parseFloat(n) * baseSize}px` })],
       [/^gap--([\w\-]+)$/, ([, s]) => ({ gap: `var(--gap--${s})` })],
-      [/^gap-inline-(\d+)$/, ([, n]) => ({ "column-gap": `${parseInt(n) * baseSize}px` })],
+      [/^gap-inline-([\d\.]+)$/, ([, n]) => ({ "column-gap": `${parseFloat(n) * baseSize}px` })],
       [/^gap-inline--([\w\-]+)$/, ([, s]) => ({ "column-gap": `var(--gap-inline--${s})` })],
-      [/^gap-block-(\d+)$/, ([, n]) => ({ "row-gap": `${parseInt(n) * baseSize}px` })],
+      [/^gap-block-([\d\.]+)$/, ([, n]) => ({ "row-gap": `${parseFloat(n) * baseSize}px` })],
       [/^gap-block--([\w\-]+)$/, ([, s]) => ({ "row-gap": `var(--gap-block--${s})` })],
       // Alignment
       ["align-start", { "align-items": "flex-start" }],
@@ -138,23 +138,23 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       //
       // Inline dimensions (minimum, maximum, and set size) -- these are clipped to 100% of the parent to avoid
       // any overflow scenarios
-      [/^min-inline-(\d+)$/, ([, n]) => ({ "min-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
+      [/^min-inline-([\d\.]+)$/, ([, n]) => ({ "min-inline-size": `min(${parseFloat(n) * baseSize}px, 100%)` })],
       [/^min-inline--([\w\-]+)$/, ([, s]) => ({ "min-inline-size": `var(--min-inline--${s})` })],
       ["min-inline-full", { "min-inline-size": "100%" }],
-      [/^max-inline-(\d+)$/, ([, n]) => ({ "max-inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
+      [/^max-inline-([\d\.]+)$/, ([, n]) => ({ "max-inline-size": `min(${parseFloat(n) * baseSize}px, 100%)` })],
       [/^max-inline--([\w\-]+)$/, ([, s]) => ({ "max-inline-size": `var(--max-inline--${s})` })],
       ["max-inline-full", { "max-inline-size": "100%" }],
-      [/^inline-(\d+)$/, ([, n]) => ({ "inline-size": `min(${parseInt(n) * baseSize}px, 100%)` })],
+      [/^inline-([\d\.]+)$/, ([, n]) => ({ "inline-size": `min(${parseFloat(n) * baseSize}px, 100%)` })],
       [/^inline--([\w\-]+)$/, ([, s]) => ({ "inline-size": `var(--inline--${s})` })],
       ["inline-full", { "inline-size": "100%" }],
       // Block dimensions (similar to above)
-      [/^min-block-(\d+)$/, ([, n]) => ({ "min-block-size": `${parseInt(n) * baseSize}px` })],
+      [/^min-block-([\d\.]+)$/, ([, n]) => ({ "min-block-size": `${parseFloat(n) * baseSize}px` })],
       [/^min-block--([\w\-]+)$/, ([, s]) => ({ "min-block-size": `var(--min-block--${s})` })],
       ["min-block-full", { "min-block-size": "100%" }],
-      [/^max-block-(\d+)$/, ([, n]) => ({ "max-block-size": `${parseInt(n) * baseSize}px` })],
+      [/^max-block-([\d\.]+)$/, ([, n]) => ({ "max-block-size": `${parseFloat(n) * baseSize}px` })],
       [/^max-block--([\w\-]+)$/, ([, s]) => ({ "max-block-size": `var(--max-block--${s})` })],
       ["max-block-full", { "max-block-size": "100%" }],
-      [/^block-(\d+)$/, ([, n]) => ({ "block-size": `${parseInt(n) * baseSize}px` })],
+      [/^block-([\d\.]+)$/, ([, n]) => ({ "block-size": `${parseFloat(n) * baseSize}px` })],
       [/^block--([\w\-]+)$/, ([, s]) => ({ "block-size": `var(--block--${s})` })],
       ["block-full", { "block-size": "100%" }],
 
@@ -163,7 +163,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["aspect-square", { "aspect-ratio": "1/1" }],
       ["aspect-video", { "aspect-ratio": "16/9" }],
       // Flexbox controls
-      [/^basis-(\d+)$/, ([, n]) => ({ "flex-basis": `${parseInt(n) * baseSize}px` })],
+      [/^basis-([\d\.]+)$/, ([, n]) => ({ "flex-basis": `${parseFloat(n) * baseSize}px` })],
       [/^grow-(\d+)$/, ([, n]) => ({ "flex-grow": `${n}` })],
       ["grow-max", { "flex-grow": 9999 }],
       [/^shrink-(\d+)$/, ([, n]) => ({ "flex-shrink": `${n}` })],
@@ -178,21 +178,21 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["absolute", { position: "absolute" }],
       ["fixed", { position: "fixed" }],
       ["sticky", { position: "sticky" }],
-      [/^block-start-(\d+)$/, ([, n]) => ({ "inset-block-start": `${parseInt(n) * baseSize}px` })],
+      [/^block-start-([\d\.]+)$/, ([, n]) => ({ "inset-block-start": `${parseFloat(n) * baseSize}px` })],
       [/^block-start--([\w\-]+)$/, ([, s]) => ({ "inset-block-start": `var(--block-start--${s})` })],
-      [/^block-end-(\d+)$/, ([, n]) => ({ "inset-block-end": `${parseInt(n) * baseSize}px` })],
+      [/^block-end-([\d\.]+)$/, ([, n]) => ({ "inset-block-end": `${parseFloat(n) * baseSize}px` })],
       [/^block-end--([\w\-]+)$/, ([, s]) => ({ "inset-block-end": `var(--block-end--${s})` })],
-      [/^inline-start-(\d+)$/, ([, n]) => ({ "inset-inline-start": `${parseInt(n) * baseSize}px` })],
+      [/^inline-start-([\d\.]+)$/, ([, n]) => ({ "inset-inline-start": `${parseFloat(n) * baseSize}px` })],
       [/^inline-start--([\w\-]+)$/, ([, s]) => ({ "inset-inline-start": `var(--inline-start--${s})` })],
-      [/^inline-end-(\d+)$/, ([, n]) => ({ "inset-inline-end": `${parseInt(n) * baseSize}px` })],
+      [/^inline-end-([\d\.]+)$/, ([, n]) => ({ "inset-inline-end": `${parseFloat(n) * baseSize}px` })],
       [/^inline-end--([\w\-]+)$/, ([, s]) => ({ "inset-inline-end": `var(--inline-end--${s})` })],
 
       // TODO: I so want this to exist on boxes, not sure if that makes sense.
-      [/^pad-(\d+)$/, ([, n]) => ({ padding: `${parseInt(n) * baseSize}px` })],
+      [/^pad-([\d\.]+)$/, ([, n]) => ({ padding: `${parseFloat(n) * baseSize}px` })],
       [/^pad--([\w\-]+)$/, ([, s]) => ({ padding: `var(--pad--${s})` })],
-      [/^pad-inline-(\d+)$/, ([, n]) => ({ "padding-inline": `${parseInt(n) * baseSize}px` })],
+      [/^pad-inline-([\d\.]+)$/, ([, n]) => ({ "padding-inline": `${parseFloat(n) * baseSize}px` })],
       [/^pad-inline--([\w\-]+)$/, ([, s]) => ({ "padding-inline": `var(--pad-inline--${s})` })],
-      [/^pad-block-(\d+)$/, ([, n]) => ({ "padding-block": `${parseInt(n) * baseSize}px` })],
+      [/^pad-block-([\d\.]+)$/, ([, n]) => ({ "padding-block": `${parseFloat(n) * baseSize}px` })],
       [/^pad-block--([\w\-]+)$/, ([, s]) => ({ "padding-block": `var(--pad-block--${s})` })],
       // Z-Index
       [/^z-(\d+)$/, ([, n]) => ({ "z-index": `${n}` })],
@@ -214,11 +214,12 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       [/^fg-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ color: `var(--color-${s})` })],
       [/^bg-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ "background-color": `var(--color-${s})` })],
       // Opacity
-      [/^opacity-(\d+)$/, ([, n]) => ({ opacity: `${parseFloat(n) / 100}` })],
+      [/^opacity-(\d+)$/, ([, n]) => ({ opacity: `${parseInt(n) / 100}` })],
       // Blur
-      [/^blur-(\d+)$/, ([, n]) => ({ "backdrop-filter": `blur(${parseInt(n) * baseSize}px)` })],
+      [/^blur-([\d\.]+)$/, ([, n]) => ({ "backdrop-filter": `blur(${parseFloat(n) * baseSize}px)` })],
       // Corner radii
-      [/^radius-(\d+)$/, ([, n]) => ({ "border-radius": `${parseInt(n) * baseSize}px` })],
+      [/^radius-([\d\.]+)$/, ([, n]) => ({ "border-radius": `${parseFloat(n) * baseSize}px` })],
+      [/^radius--([\w\-]+)$/, ([, s]) => ({ "border-radius": `var(--radius--${s})` })],
       ["radius-full", { "border-radius": "9999px" }],
       // Borders
       [/^border-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ border: `solid 1px var(--color-${s})` })],
@@ -228,6 +229,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["border-dashed", { "border-style": "dashed" }],
       ["border-transparent", { "border-color": "transparent" }],
       [/^border-([\d\.]+)$/, ([, n]) => ({ "border-width": `${n}px` })],
+
       // Outlines
       [/^outline-([a-zA-Z][\w\-]*)$/, ([, s]) => ({ outline: `solid 1px var(--color-${s})` })],
       ["outline-none", { "outline-style": "none" }],
