@@ -1,7 +1,7 @@
 {
   "name": "@spritz-css/uno-preset",
   "description": "A light CSS framework that wants to make your life more fun",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Eugen Minciu <eugen@gengen.io>",
   "keywords": [],
   "license": "MIT",
