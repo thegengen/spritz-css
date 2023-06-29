@@ -1,19 +1,39 @@
-# Spritz.CSS
+# Spritz CSS
+
+A light CSS framework that wants to make your life more fun.
+
+## What is Spritz
+
+Spritz is a a cocktail of different ideas in how to create sharp user interfaces for websites and applications. Here’s are some decisions that set it apart.
+
+- Spritz uses the excellent ideas in [Every Layout](https://every-layout.dev) to let you describe your interface using declarative classes like `row`, `stack`, or `item-grid`. These classes describe layout regardless of viewport sizes, removing the need for finnicky, viewport-based setups.
+- On top of that, Spritz sprinkles atomic classes like you would find in [Tailwind CSS](https://tailwindcss.com). You have classes like `gap-2`, `pad-4`, or `aspect-square`.
+- Unlike Tailwind, there is no predefined list of sizes that you have to fight against. Sometimes a design looks best with a gap of 52px, so you can have your lucky `gap-13`. Your 10 pixel padding is as easy as `pad-2.5`
+- Spritz also supports Tailwind-style prefixes like `sm:` or `hover:`, but is not opinionated about how these work. Go mobile-first or desktop-first. Mix and match. You can finally have your `below-sm:hidden`.
+- There’s a nifty feature called semantic classes. Define a class like `pad--button` and Spritz will set the padding to `var(--pad--button)`. Spritz isn’t here to tell you never to write CSS again, but we’ll try to make it easier for you.
+- Speaking of which, Spritz doesn’t have a custom configuration format for colors, sizes, or any theme properties. You’re reponsible for setting all of those up using CSS variables. That lets you reuse them in your own CSS.
+- Spritz also chooses not to include a lot of things in its box.
+  - It avoids margins and favors paddings, gaps and nesting elements to control spacing.
+  - It does not have atomic classes for typographic attributes like font sizes or line heights. Instead, it encourages you to create cohesive typographic styles.
+  - It does not come with a lot of Tailwind bells and whistles like `group:`, `pad-[23px]` . Use CSS when you need something fancy.
+
+## Installation
+
+Coming soon.
+
+## Organization
+
+Spritz splits its functionality into five parts, each of which relies on utility classes that you add to your elements.
+
+1. Layouts. These are utility classes that define how an element’s children should be laid out; this also includes utility classes for gaps and padding
+2. Position. Relative or static positioning; reordering items; position on the z axis.
+3. Dimensions. Width, height, aspect ratios, growing and shrinking
+4. Boxes. Setting borders, colors, padding(?)
+5. Typography. Use this for your own typographic classes and to customize those as needed.
 
 ## Writing clean classes
 
-Spritz splits its functionality into five parts, each of which relies on utility classes that you add to your elements. Together with your own classes, that means you want to split up classes into six sections:
-
-1. Selectors. These are your own classes that you use in order to target the element from CSS or JavaScript.
-2. Layouts. These are utility classes that define how an element’s children should be laid out; this also includes classes for gaps and padding
-3. Position. Relative or static positioning; reordering items; position on the z axis.
-4. Dimensions. Width, height, aspect ratios, growing and shrinking
-5. Boxes. Setting borders, colors, padding(?)
-6. Typography. Use this for your own typographic classes and to customize those as needed.
-
-Because Spritz encourages you not to be shy about wrapper elements, you will rarely use all six.
-
-To make things easier for your readers it is recommended (but not required) that you use vertical bars to separate classes when written out on a single line:
+To make things easier for your readers it is recommended (but not required) that you use vertical bars to separate classes based on the five parts above. Any of your own classes (we call them selectors) should go first.
 
 ```html
 <div
