@@ -77,6 +77,7 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
     variants: [
       postfixVariant("hover", "hover"),
       postfixVariant("focus", "focus-visible"),
+      postfixVariant("disabled", "disabled"),
       postfixVariant("active", "active"),
       postfixVariant("even", ":nth-of-type(even)"),
       postfixVariant("odd", ":nth-of-type(odd)"),
