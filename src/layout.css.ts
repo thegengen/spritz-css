@@ -131,6 +131,10 @@ export default `
   line-height: 1;
 }
 
+[class^="stroke-"] svg, [class*=" stroke-"] svg {
+  stroke-width: inherit;
+}
+
 .divider {
   align-self: stretch;
   flex-grow: 0;

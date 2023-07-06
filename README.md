@@ -298,7 +298,7 @@ Order classes determine how elements will be visually ordered:
 
 - `order-2` will set `order: 2`
 - `order-first` will make the element first by setting `order: -999`; you should only use this once within a set of siblings
-- `order-first` will make the element last by setting `order: 999`; you should only use this once within a set of siblings
+- `order-last` will make the element last by setting `order: 999`; you should only use this once within a set of siblings
 
 ## Boxes
 

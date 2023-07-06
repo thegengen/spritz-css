@@ -279,6 +279,8 @@ export function presetSpritz(options: PresetSpritzOptions = {}): Preset<Theme> {
       ["list-outside", { "list-style-position": "outside" }],
       ["list-none", { "list-style-type": "none" }],
       ["list-disc", { "list-style-type": "disc" }],
+      // Strokes
+      [/^stroke-([\d\.]+)$/, ([, n]) => ({ "stroke-width": `${n}px` })],
     ],
   };
 }
